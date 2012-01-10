@@ -1,7 +1,7 @@
 #RECOVER NETCOOL PASSWORD UTILITY
 #recover_netcool_passwd.pl
 
-##OBJECTIVE:  
+##OBJECTIVE  
 Perl utility to recover IBM Tivoli Netcool ObjectServer password via systematic brute force.
 
 ##BACKGROUND
@@ -24,5 +24,5 @@ There’s none. Just run the script!
 ##USAGE
 When prompted, enter the encrypted Netcool user password to be recovered.
 
-##AUTHOR:  
+##AUTHOR  
 Rutger Thomschutz
