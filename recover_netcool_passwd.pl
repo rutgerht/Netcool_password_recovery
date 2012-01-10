@@ -21,29 +21,42 @@
 use strict;
 use warnings;
 
-my $nco_sql_crypt = '/opt/IBM/tivoli/netcool/omnibus/bin/nco_sql_crypt';
+my $nco_sql_crypt = '/opt/IBM/tivoli/netcool/omnibus/bin/nco_sql_crypt'; # Default full path to Netcool 7.2+ encryption tool
 my @letters = ("a" .. "z");
 my @nums = (0 .. 9);
 my @chars = (@letters, @nums); # Step 1: Create Array of all letters in alphabet and numbers 0-9 
 
+# Prompt user to input encrypted password
 print "Enter Netcool password: ";
-my $passwd = <STDIN>;
+my $passwd = <STDIN>; 
 print "Recovering password ...\n";
-#my $passwd = 'EIEDBIBHFLBKCK';
+#my $passwd = 'EIEDBIBHFLBKCK'; # For testing. Encrypted form of password 'test123'.
 my @en_passwd = $passwd =~ m/(\w{2})/g; # Step 2: Parse the password into blocks of two characters and store in array
 
+# Initialize variables
 my $un_passwd_maybe='';
 my $crkd_passwd='';
 my $i=0;
 my $en_passwd=$en_passwd[$i];
 my $passwd_len = 0;
 
+#################################################################################
+# Main body of application 
+#################################################################################
+# The while loop calls subroutine recover_passwd a number 
+# equal to the length of the encrypted user password
 while ($passwd_len < @en_passwd) {
 	&recover_passwd;
 	$passwd_len++;
 }
 
-
+#################################################################################
+# SUBROUTINES
+#################################################################################
+# recover_passwd - tests if an encrypted alphanumeric string matches part of the 
+# encrypted password. If a match is found, it breaks out of the loop and proceeds
+# by recovering the next encrypted character.   
+#################################################################################
 sub recover_passwd {
 	chomp $en_passwd;
 	foreach my $char (@chars) {
@@ -62,6 +75,7 @@ sub recover_passwd {
 	}
 }
 
+# Print recovered password to screen
 print "\n\n";
 print "Password recovered: $un_passwd_maybe\n";
 # eof
